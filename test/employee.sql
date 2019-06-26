@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2019 at 03:20 PM
+-- Generation Time: Jun 26, 2019 at 04:33 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -23,24 +23,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `departement`
+--
+
+CREATE TABLE IF NOT EXISTS `departement` (
+  `id` int(11) NOT NULL,
+  `dept_name` varchar(255) NOT NULL,
+  `id_dept` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `departement`
+--
+
+INSERT INTO `departement` (`id`, `dept_name`, `id_dept`) VALUES
+(1, 'tester', NULL),
+(2, 'programer', NULL),
+(3, 'UI', NULL),
+(4, 'asd', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `employee`
 --
 
 CREATE TABLE IF NOT EXISTS `employee` (
   `id` int(11) NOT NULL,
   `lastname` varchar(255) NOT NULL,
-  `firstname` varchar(255) NOT NULL
+  `firstname` varchar(255) NOT NULL,
+  `id_dept` int(11) NOT NULL,
+  `salary` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`id`, `lastname`, `firstname`) VALUES
-(4, 'tas', 'nas'),
-(5, 'tas', 'ass'),
-(6, 'har', 'rom'),
-(7, 'hata', 'rom');
+INSERT INTO `employee` (`id`, `lastname`, `firstname`, `id_dept`, `salary`) VALUES
+(5, 'rolo', 'asd', 2, 1000),
+(6, 'rolo', 'asd', 2, 1000),
+(7, 'hata', 'rom', 1, 15100);
 
 -- --------------------------------------------------------
 
@@ -57,56 +80,33 @@ CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(8);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `login`
---
-
-CREATE TABLE IF NOT EXISTS `login` (
-  `id` bigint(20) NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL,
-  `enabled` int(11) NOT NULL,
-  `password` text NOT NULL,
-  `username` text NOT NULL,
-  `role` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `enabled`, `password`, `username`, `role`) VALUES
-(1, 1, '$2a$10$iFolDdAquu/qSclfNDiBK.GFpO0gUBAsCilygHuCy6pUWVd.4ZK8G', 'admin', 'ADMIN');
+(9);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `login`
+-- Indexes for table `departement`
 --
-ALTER TABLE `login`
+ALTER TABLE `departement`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indexes for table `employee`
 --
-ALTER TABLE `users`
- ADD PRIMARY KEY (`id`);
+ALTER TABLE `employee`
+ ADD PRIMARY KEY (`id`), ADD KEY `id_dept` (`id_dept`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `employee`
+--
+ALTER TABLE `employee`
+ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`id_dept`) REFERENCES `departement` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
